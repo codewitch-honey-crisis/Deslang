@@ -130,15 +130,15 @@ static partial class SlangParser{public static CodeCompileUnit ParseCompileUnit(
 }public static CodeCompileUnit ReadCompileUnitFrom(Stream stream){var tokenizer=new SlangTokenizer(stream);return ParseCompileUnit(tokenizer);}public static
  CodeCompileUnit ParseCompileUnit(string text,int line,int column,long position){var tokenizer=new SlangTokenizer(text);var pc=new _PC(tokenizer);pc.SetLocation(line,
 column,position);return _ParseCompileUnit(pc);}public static CodeCompileUnit ReadCompileUnitFrom(Stream stream,int line,int column,long position){var tokenizer
-=new SlangTokenizer(stream);var pc=new _PC(tokenizer);pc.SetLocation(line,column,position);return _ParseCompileUnit(pc);}internal static CodeCompileUnit
+=new SlangTokenizer(stream);var pc=new _PC(tokenizer);pc.SetLocation(line,column,position); return _ParseCompileUnit(pc);}internal static CodeCompileUnit
  ParseCompileUnit(IEnumerable<Token>tokenizer){var pc=new _PC(tokenizer);pc.Advance(false);return _ParseCompileUnit(pc);}static CodeCompileUnit _ParseCompileUnit(_PC
- pc){var l=pc.Line;var c=pc.Column;var p=pc.Position;var result=new CodeCompileUnit().Mark(l,c,p);var ns=new CodeNamespace().Mark(l,c,p);result.Namespaces.Add(ns);
-while(ST.directive==pc.SymbolId||ST.lineComment==pc.SymbolId||ST.blockComment==pc.SymbolId){switch(pc.SymbolId){case ST.directive:var d=_ParseDirective(pc)
-as CodeDirective;if(null!=d)result.StartDirectives.Add(d);break;case ST.blockComment:ns.Comments.Add(_ParseCommentStatement(pc));break;case ST.lineComment:
-ns.Comments.Add(_ParseCommentStatement(pc,true));break;}}while(ST.usingKeyword==pc.SymbolId){while(ST.directive==pc.SymbolId||ST.lineComment==pc.SymbolId
-||ST.blockComment==pc.SymbolId)pc.Advance(false);var l2=pc.Line;var c2=pc.Column;var p2=pc.Position;pc.Advance();var nsi=new CodeNamespaceImport(_ParseNamespaceName(pc)).SetLoc(l2,
-c2,p2);if(ST.semi!=pc.SymbolId)pc.Error("Expecting ; in using declaration");pc.Advance(false);ns.Imports.Add(nsi);}while(ST.lbracket==pc.SymbolId){var
- pc2=pc.GetLookAhead(true);pc2.Advance();if(ST.assemblyKeyword!=pc2.SymbolId)break;result.AssemblyCustomAttributes.AddRange(_ParseAttributeGroup(pc,false).Value);
+ pc){if(pc.Value==null){pc.Advance();}var l=pc.Line;var c=pc.Column;var p=pc.Position;var result=new CodeCompileUnit().Mark(l,c,p);var ns=new CodeNamespace().Mark(l,
+c,p);result.Namespaces.Add(ns);while(ST.directive==pc.SymbolId||ST.lineComment==pc.SymbolId||ST.blockComment==pc.SymbolId){switch(pc.SymbolId){case ST.directive:
+var d=_ParseDirective(pc)as CodeDirective;if(null!=d)result.StartDirectives.Add(d);break;case ST.blockComment:ns.Comments.Add(_ParseCommentStatement(pc));
+break;case ST.lineComment:ns.Comments.Add(_ParseCommentStatement(pc,true));break;}}while(ST.usingKeyword==pc.SymbolId){while(ST.directive==pc.SymbolId
+||ST.lineComment==pc.SymbolId||ST.blockComment==pc.SymbolId)pc.Advance(false);var l2=pc.Line;var c2=pc.Column;var p2=pc.Position;pc.Advance();var nsi=
+new CodeNamespaceImport(_ParseNamespaceName(pc)).SetLoc(l2,c2,p2);if(ST.semi!=pc.SymbolId)pc.Error("Expecting ; in using declaration");pc.Advance(false);
+ns.Imports.Add(nsi);}while(ST.lbracket==pc.SymbolId){var pc2=pc.GetLookAhead(true);pc2.Advance();if(ST.assemblyKeyword!=pc2.SymbolId)break;result.AssemblyCustomAttributes.AddRange(_ParseAttributeGroup(pc,false).Value);
 }while(!pc.IsEnded){var startDirs=new CodeDirectiveCollection();var comments=new CodeCommentStatementCollection();CodeLinePragma lp=null;while(ST.directive
 ==pc.SymbolId||ST.lineComment==pc.SymbolId||ST.blockComment==pc.SymbolId){switch(pc.SymbolId){case ST.directive:var d=_ParseDirective(pc);var llp=d as
  CodeLinePragma;if(null!=llp)lp=llp;else if(null!=d)startDirs.Add(d as CodeDirective);break;case ST.blockComment:comments.Add(_ParseCommentStatement(pc));
@@ -147,12 +147,10 @@ result.Namespaces.Add(nns);}else{var t=_ParseTypeDecl(pc,false,pc.Line,pc.Column
 t.LinePragma=lp;ns.Types.Add(t);}}return result;}static CodeNamespace _ParseNamespace(_PC pc){var l=pc.Line;var c=pc.Column;var p=pc.Position;var result
 =new CodeNamespace().Mark(l,c,p);while(ST.lineComment==pc.SymbolId||ST.blockComment==pc.SymbolId||ST.directive==pc.SymbolId){if(ST.directive!=pc.SymbolId)
 result.Comments.Add(_ParseCommentStatement(pc,true));}if(ST.namespaceKeyword!=pc.SymbolId)pc.Error("Expecting namespace");pc.Advance();result.Name=_ParseNamespaceName(pc);
-if(ST.lbrace!=pc.SymbolId)pc.Error("Expecing { in namespace declaration");pc.Advance(false);var ccc=new CodeCommentStatementCollection();if(ST.directive
-==pc.SymbolId||ST.lineComment==pc.SymbolId||ST.blockComment==pc.SymbolId){if(ST.directive!=pc.SymbolId)ccc.Add(_ParseCommentStatement(pc,true));var pc2
-=pc.GetLookAhead(true);if(ST.usingKeyword==pc2.SymbolId)pc.Advance();}while(ST.usingKeyword==pc.SymbolId){ccc.Clear();while(ST.directive==pc.SymbolId||
-ST.lineComment==pc.SymbolId||ST.blockComment==pc.SymbolId)pc.Advance(false);var l2=pc.Line;var c2=pc.Column;var p2=pc.Position;pc.Advance();var nsi=new
- CodeNamespaceImport(_ParseNamespaceName(pc)).SetLoc(l2,c2,p2);if(ST.semi!=pc.SymbolId)pc.Error("Expecting ; in using declaration");pc.Advance(false);
-result.Imports.Add(nsi);}while(ST.rbrace!=pc.SymbolId){ var tdecl=_ParseTypeDecl(pc,false,pc.Line,pc.Column,pc.Position,null);tdecl.Comments.AddRange(ccc);
+if(ST.lbrace!=pc.SymbolId)pc.Error("Expecing { in namespace declaration");pc.Advance(false);var ccc=new CodeCommentStatementCollection(); while(ST.usingKeyword==pc.SymbolId)
+{ccc.Clear();while(ST.directive==pc.SymbolId||ST.lineComment==pc.SymbolId||ST.blockComment==pc.SymbolId)pc.Advance(false);var l2=pc.Line;var c2=pc.Column;
+var p2=pc.Position;pc.Advance();var nsi=new CodeNamespaceImport(_ParseNamespaceName(pc)).SetLoc(l2,c2,p2);if(ST.semi!=pc.SymbolId)pc.Error("Expecting ; in using declaration");
+pc.Advance(false);result.Imports.Add(nsi);}while(ST.rbrace!=pc.SymbolId){ var tdecl=_ParseTypeDecl(pc,false,pc.Line,pc.Column,pc.Position,null);tdecl.Comments.AddRange(ccc);
 result.Types.Add(tdecl);}if(ST.rbrace!=pc.SymbolId)pc.Error("Unterminated namespace declaration",l,c,p);pc.Advance(false);return result;}static string
  _ParseNamespaceName(_PC pc){var l=pc.Line;var c=pc.Column;var p=pc.Position;var result="";while(!pc.IsEnded&&ST.lbrace!=pc.SymbolId&&ST.semi!=pc.SymbolId)
 {if(0<result.Length)result+=".";result+=_ParseIdentifier(pc);if(ST.lbrace==pc.SymbolId||ST.semi==pc.SymbolId)break;var l2=pc.Line;var c2=pc.Column;var
