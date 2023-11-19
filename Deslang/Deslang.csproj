@@ -45,6 +45,9 @@
   <ItemGroup>
     <Compile Include="CodeDomGoKit.brick.cs" />
     <Compile Include="Slang.brick.cs" />
+    <Content Include="Widget.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="GplexBuffers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Export\" />
+    <Folder Include="Test\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
