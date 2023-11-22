@@ -44,14 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeDomGoKit.brick.cs" />
+    <Compile Include="Deslanged.cs" />
     <Compile Include="Slang.brick.cs" />
     <Content Include="Widget.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="GplexBuffers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Shared\CodeDomBuilder.cs" />
+    <Content Include="Shared\CodeDomBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -63,7 +63,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>$(SolutionDir)deslang.exe "$(ProjectDir)Shared\CodeDomBuilder.cs" /output "$(ProjectDir)\Deslanged.cs" /namespace Deslang</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

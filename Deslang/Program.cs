@@ -159,17 +159,10 @@ namespace Deslang
 						Console.Error.Write("{0} is cooking {1}.", _Name, outputfile);
 					else
 						Console.Error.Write("{0} is cooking deslanged code.", _Name);
-					
-					#region Load Builder
-					CodeCompileUnit builderCcu = null;
-					using (var stm = typeof(Program).Assembly.GetManifestResourceStream("Deslang.Shared.CodeDomBuilder.cs"))
-					{
-						builderCcu = SlangParser.ReadCompileUnitFrom(stm);
-					}
-					builderCcu.ReferencedAssemblies.Add(typeof(CodeObject).Assembly.GetName().ToString());
-					SlangPatcher.Patch(builderCcu);
-					#endregion
 
+
+					CodeCompileUnit builderCcu = Deslanged.CodeDomBuilder;
+					
 					var donor = builderCcu.Namespaces[1].Types[0];
 
 					Console.Error.WriteLine();
