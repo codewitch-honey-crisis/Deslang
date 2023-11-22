@@ -63,7 +63,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir)deslang.exe "$(ProjectDir)Shared\CodeDomBuilder.cs" /output "$(ProjectDir)\Deslanged.cs" /namespace Deslang</PreBuildEvent>
+    <PreBuildEvent>$(SolutionDir)deslang.exe "$(ProjectDir)Shared\CodeDomBuilder.cs" /output "$(ProjectDir)Deslanged.cs" /namespace Deslang /ifstale</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)"</PostBuildEvent>
