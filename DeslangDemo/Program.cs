@@ -1,9 +1,6 @@
 ﻿using CD;
 using System;
 using System.CodeDom;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace DeslangDemo
 {
@@ -14,26 +11,17 @@ namespace DeslangDemo
 			var widget = Deslanged.Widget;
 			CodeDomVisitor.Visit(widget, (ctx) =>
 			{
-				// look for our _payload field
-				var f = ctx.Target as CodeMemberField;
-				if(null!=f && "_payload"==f.Name)
+				// look for our marked primitive expression
+				var cpe = ctx.Target as CodePrimitiveExpression;
+				
+				if(null!=cpe && "$marker"==(cpe.Value as string))
 				{
-					// give it some data
-					f.InitExpression = CodeDomUtility.Literal(_Hash(DateTime.UtcNow.ToString()));
-					// we're done searching
+					cpe.Value = "Hello world!";
 					ctx.Cancel = true;
 				}
 			});
 
 			Console.WriteLine(CodeDomUtility.ToString(widget));
-		}
-		static byte[] _Hash(string text)
-		{
-			// Create a SHA256   
-			using (SHA256 sha256Hash = SHA256.Create())
-			{
-				return sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(text));
-			}
 		}
 	}
 }
