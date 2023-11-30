@@ -1,27 +1,29 @@
-﻿using CD;
-using System;
+﻿using System;
 using System.CodeDom;
 
+using CD;
 namespace DeslangDemo
 {
 	class Program
 	{
-		static void Main(string[] args)
-		{
+		static void Main(string[] args) {
 			var widget = Deslanged.Widget;
-			CodeDomVisitor.Visit(widget, (ctx) =>
-			{
-				// look for our marked primitive expression
-				var cpe = ctx.Target as CodePrimitiveExpression;
-				
-				if(null!=cpe && "$marker"==(cpe.Value as string))
+			CD.CodeDomVisitor.Visit(widget, (CodeDomVisitContext ctx) => {
+				var cmr = ctx.Target as CodeMethodReturnStatement;
+				if (cmr != null)
 				{
-					cpe.Value = "Hello world!";
-					ctx.Cancel = true;
+					var cpe = cmr.Expression as CodePrimitiveExpression;
+					if(cpe != null)
+					{
+						if ((cpe.Value as string) == "$marker")
+						{
+							cpe.Value = "Hello World!";
+							ctx.Cancel = true;
+						}
+					}
 				}
-			});
-
-			Console.WriteLine(CodeDomUtility.ToString(widget));
+			},CodeDomVisitTargets.All);
+			Console.WriteLine(CD.CodeDomUtility.ToString(widget));
 		}
 	}
 }

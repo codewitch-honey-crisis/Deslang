@@ -84,17 +84,17 @@ namespace DeslangDemo {
         }
         public static System.CodeDom.CodeCompileUnit Widget {
             get {
-                return Deslanged._CompileUnit(new string[] {
-                            "System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"}, new CodeNamespace[] {
-                            Deslanged._Namespace("", new CodeNamespaceImport[] {
-                                        new CodeNamespaceImport("System")}, new CodeTypeDeclaration[0], new CodeCommentStatement[0]),
-                            Deslanged._Namespace("CorporateHellscape", new CodeNamespaceImport[0], new CodeTypeDeclaration[] {
-                                        Deslanged._TypeDeclaration("Widget", true, false, false, false, true, (MemberAttributes.Final | MemberAttributes. Private), TypeAttributes.NotPublic, new CodeTypeParameter[0], new CodeTypeReference[0], new CodeTypeMember[] {
-                                                    Deslanged._MemberMethod(new CodeTypeReference(typeof(string)), "ToString", (MemberAttributes.Override | MemberAttributes. Public), new CodeParameterDeclarationExpression[0], new CodeStatement[] {
-                                                                new CodeMethodReturnStatement(new CodePrimitiveExpression("$marker"))}, new CodeTypeReference[0], null, new CodeCommentStatement[0], new CodeAttributeDeclaration[0], new CodeAttributeDeclaration[0], new CodeDirective[0], new CodeDirective[0], null)}, new CodeCommentStatement[] {
-                                                    new CodeCommentStatement(" <summary>", true),
-                                                    new CodeCommentStatement(" Base widget implementation", true),
-                                                    new CodeCommentStatement(" </summary>", true)}, new CodeAttributeDeclaration[0], new CodeDirective[0], new CodeDirective[0], null)}, new CodeCommentStatement[0])}, new CodeAttributeDeclaration[0], new CodeDirective[0], new CodeDirective[0]);
+return Deslanged._CompileUnit(new string[] {
+            "System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"}, new CodeNamespace[] {
+            Deslanged._Namespace("", new CodeNamespaceImport[] {
+                        new CodeNamespaceImport("System")}, new CodeTypeDeclaration[0], new CodeCommentStatement[0]),
+            Deslanged._Namespace("CorporateHellscape", new CodeNamespaceImport[0], new CodeTypeDeclaration[] {
+                        Deslanged._TypeDeclaration("Widget", true, false, false, false, true, (MemberAttributes.Final | MemberAttributes. Private), TypeAttributes.NotPublic, new CodeTypeParameter[0], new CodeTypeReference[0], new CodeTypeMember[] {
+                                    Deslanged._MemberMethod(new CodeTypeReference(typeof(string)), "ToString", (MemberAttributes.Override | MemberAttributes. Public), new CodeParameterDeclarationExpression[0], new CodeStatement[] {
+                                                new CodeMethodReturnStatement(new CodePrimitiveExpression("$marker"))}, new CodeTypeReference[0], null, new CodeCommentStatement[0], new CodeAttributeDeclaration[0], new CodeAttributeDeclaration[0], new CodeDirective[0], new CodeDirective[0], null)}, new CodeCommentStatement[] {
+                                    new CodeCommentStatement(" <summary>", true),
+                                    new CodeCommentStatement(" Base widget implementation", true),
+                                    new CodeCommentStatement(" </summary>", true)}, new CodeAttributeDeclaration[0], new CodeDirective[0], new CodeDirective[0], null)}, new CodeCommentStatement[0])}, new CodeAttributeDeclaration[0], new CodeDirective[0], new CodeDirective[0]);
             }
         }
     }
