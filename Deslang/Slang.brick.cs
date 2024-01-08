@@ -649,11 +649,12 @@ else result=(result&~TypeAttributes.VisibilityMask)|TypeAttributes.NestedFamANDA
 |TypeAttributes.NestedPublic;break;case"private":result=(result&~TypeAttributes.VisibilityMask)|TypeAttributes.NestedPrivate|TypeAttributes.NotPublic;
 break;}}return result;}static TypeAttributes _BuildTypeAttributes(HashSet<string>attrs,int line,int column,long position){var result=(TypeAttributes)0;
 foreach(var attr in attrs){switch(attr){case"public":result=(result&~TypeAttributes.VisibilityMask)|TypeAttributes.Public;break;case"internal":result=
-(result&~TypeAttributes.VisibilityMask)|TypeAttributes.NotPublic;break;case"abstract":result|=TypeAttributes.Abstract;break;case"private":throw new SlangSyntaxException("Top level types cannot be private",
-line,column,position);case"virtual":throw new SlangSyntaxException("Top level types cannot be virtual",line,column,position);case"protected":throw new
- SlangSyntaxException("Top level types cannot be protected",line,column,position);case"static":throw new SlangSyntaxException("Top level types cannot be static",
-line,column,position);case"new":throw new SlangSyntaxException("Top level types cannot be declared new",line,column,position);case"override":throw new
- SlangSyntaxException("Top level types cannot be declared override",line,column,position);}}return result;}}}namespace Slang{
+(result&~TypeAttributes.VisibilityMask)|TypeAttributes.NotPublic;break;case"abstract":result|=(result&~TypeAttributes.ClassSemanticsMask)|TypeAttributes.Abstract;
+break;case"private":throw new SlangSyntaxException("Top level types cannot be private",line,column,position);case"virtual":throw new SlangSyntaxException("Top level types cannot be virtual",
+line,column,position);case"protected":throw new SlangSyntaxException("Top level types cannot be protected",line,column,position);case"static":throw new
+ SlangSyntaxException("Top level types cannot be static",line,column,position);case"new":throw new SlangSyntaxException("Top level types cannot be declared new",
+line,column,position);case"override":throw new SlangSyntaxException("Top level types cannot be declared override",line,column,position);}}return result;
+}}}namespace Slang{
 #if SLANGLIB
 public
 #endif
